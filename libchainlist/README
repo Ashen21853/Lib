@@ -1,0 +1,10 @@
+# README libchainlist
+
+Just Run the following :
+$ make
+$ sudo make install
+
+You can now include this lib with '#include <chainlist.h>',
+Don't forget the '-lchainlist' when you compiling ;)
+
+Ghost
