@@ -28,9 +28,9 @@ install:
 		echo "You should run 'make' before installing";\
 		exit 1;	\
 	fi
-	mv $(LIB) $(DIR_TO_A)
-	mv $(TARGET_H) $(DIR_TO_H)
-	mv $(TARGET_MAN) $(DIR_TO_MAN)
+	cp $(LIB) $(DIR_TO_A)
+	cp $(TARGET_H) $(DIR_TO_H)
+	cp $(TARGET_MAN) $(DIR_TO_MAN)
 	@echo "Installation complete"
 	@echo "Compile with -lchainlist, see man chainlist for details"
 

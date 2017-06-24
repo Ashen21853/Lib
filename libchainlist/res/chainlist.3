@@ -1,0 +1,179 @@
+.TH chainlist.h 3 "June 23, 2017" "version 0.1" "C LIB"
+.SH NAME
+.TP
+.B chainlist.h \ - C lib used for manipulate sample chained list
+Compile with -lchainlist
+
+.SH SYNOPSIS
+A lib for manipulate sample chain list : a list who's composed of
+.I sl_node 
+containing adress of next 
+.I sl_node 
+and a generic *ptr to a
+.I data
+, below is the struct used for this lib:
+
+.B typedef struct list list;
+.br
+.B typedef struct sl_node sl_node;
+.PP
+.B struct list {
+.br
+.B "    void *prime;"
+	// adress of the first node
+.br
+.B "    unsigned int size;"
+	// nb of node in list
+.br
+.B "};"
+
+.B struct sl_node {
+.br
+.B "    void *data;"
+// adress of data
+.br
+.B "    sl_node *next;"
+// adress of next node
+.br
+.B };
+
+.SH FUNCTIONS
+.TP
+.B list *new_list();
+.br
+Alloc a new
+.B struct list
+and set
+.I *prime
+to
+.I NULL
+and
+.I size
+to 0.
+.br
+Return the new list or NULL if malloc() fail.
+.PP
+.TP
+.B sl_node *sl_new_node(void *new_data, sl_node *new_next);
+Alloc a new
+.B struct sl_node
+and set
+.I *data
+to
+.I *new_data
+, and
+.I *next
+to
+.I *new_next
+.br
+Return the new node or NULL if malloc fail().
+.PP
+
+.TP
+.B sl_node *sl_get_last_node(list *l);
+Return a
+.B ptr*
+to the last
+.B sl_node
+of the list
+.I *l.
+.PP
+
+.TP
+.B void sl_map(list *l);
+Print info (by default on
+.B stderr
+, edit CHAINLIST_MAP_CANAL on chainlist.h for change) about each
+.B sl_node
+in list
+.I *l
+, in format :
+.br
+"(0x1) data -> 0x2 | next -> 0x3",
+.br
+where 0x1 is the adress of the
+.B sl_node
+, 0x2 is the adress of 
+.B data
+and 0x3 is the adress of next
+.B sl_node.
+.PP
+
+.TP
+.B void *sl_push(list *l, void *data);
+Append list
+.I *l
+and add a new
+.B sl_node
+to the beginning of the list.
+.br
+Return 
+.I *data
+for chaining or
+.B NULL
+if an error occur.
+.PP
+.TP
+.B void *sl_push_last(list *l, void *data);
+Like
+.B *sl_push(...)
+but add the
+.B sl_node at the end of the list.
+.PP
+
+.TP
+.B void *sl_pop(list *l);
+Delete the first
+.B sl_node
+of the list, free them, and return
+.I *data.
+.PP
+.TP
+.B void *sl_pop_last(list *l);
+Like
+.B sl_pop(...)
+but delete the last
+.B sl_node
+of the list
+.I *l.
+.PP
+
+.TP
+.B void sl_free_pop(list *l);
+Like
+.B sl_pop(...)
+but call 
+.I free()
+on
+.B *data.
+.PP
+
+.TP
+.B void sl_free_pop_last(list *l);
+Like
+.B sl_pop_last(...)
+but call 
+.I free() 
+on
+.B *data.
+.PP
+
+.TP
+.B void sl_clean(list *l);
+Clean list
+.I *l
+and ignore the values returned by 
+.B sl_pop().
+
+.PP
+.TP
+.B void sl_fclean(list *l);
+Same
+.B sl_clean(...)
+but call
+.I free()
+on each
+.B *data
+
+.SH AUTHOR
+Ghost
